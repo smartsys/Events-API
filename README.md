@@ -63,6 +63,25 @@ The API includes interactive Swagger UI documentation. After starting the server
 
 **Alternative**: You can also view the OpenAPI specification directly at `http://localhost:5000/apispec_1.json`
 
+## Running Tests
+
+The test suite lives in the `tests/` folder and uses `pytest`:
+
+- `tests/test_models.py` - unit tests for the `User` model (no server required, uses an in-memory database)
+- `tests/test_api.py` - integration tests against the running API at `http://localhost:5000`
+
+1. Start the API in a separate terminal:
+```bash
+python app.py
+```
+
+2. Run all tests:
+```bash
+pytest
+```
+
+**Note**: The integration tests create users, events and RSVPs in the database of the running server (`instance/events.db`).
+
 ## API Endpoints
 
 ### Authentication
