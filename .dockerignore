@@ -1,0 +1,28 @@
+# Virtual environments
+venv/
+.venv/
+env/
+
+# Python caches
+**/__pycache__/
+**/*.pyc
+.pytest_cache/
+
+# Local databases
+instance/
+*.db
+*.sqlite*
+
+# Git
+.git/
+.gitignore
+
+# Not needed at runtime
+tests/
+documentation/
+*.md
+
+# IDE and other hidden files
+.idea/
+.vscode/
+.*

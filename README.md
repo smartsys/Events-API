@@ -43,6 +43,31 @@ python app.py
 
 The API will be available at `http://localhost:5000`
 
+## Running with Docker
+
+1. Build the image:
+```bash
+docker build -t events-api .
+```
+
+2. Start a container and map port 5000:
+```bash
+docker run -d --name events-api -p 5000:5000 events-api
+```
+
+3. Check that the API is running:
+```bash
+curl http://localhost:5000/api/health
+```
+
+4. Stop and remove the container:
+```bash
+docker stop events-api
+docker rm events-api
+```
+
+**Note**: The container starts with an empty database. Data is kept across `docker stop` / `docker start`, but is lost when the container is removed.
+
 ## Swagger UI Documentation
 
 The API includes interactive Swagger UI documentation. After starting the server:
@@ -70,7 +95,7 @@ The test suite lives in the `tests/` folder and uses `pytest`:
 - `tests/test_models.py` - unit tests for the `User` model (no server required, uses an in-memory database)
 - `tests/test_api.py` - integration tests against the running API at `http://localhost:5000`
 
-1. Start the API in a separate terminal:
+1. Start the API in a separate terminal (or run it in a Docker container, see above):
 ```bash
 python app.py
 ```
