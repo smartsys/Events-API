@@ -107,6 +107,19 @@ pytest
 
 **Note**: The integration tests create users, events and RSVPs in the database of the running server (`instance/events.db`).
 
+## Continuous Integration
+
+A GitHub Actions workflow (`.github/workflows/ci.yml`) runs on every push to `main` and on every pull request targeting `main`. It:
+
+1. checks out the code
+2. builds the Docker image `events-api:latest`
+3. starts a container on port 5000 and waits for `/api/health` to respond
+4. sets up Python 3.12 and installs the dependencies from `requirements.txt`
+5. runs `pytest -v` against the containerized API
+6. always stops and removes the container, even if a step fails
+
+The workflow fails if any test fails. Results are shown in the **Actions** tab of the repository.
+
 ## API Endpoints
 
 ### Authentication

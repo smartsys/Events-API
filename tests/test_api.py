@@ -21,7 +21,7 @@ def test_health_endpoint_returns_healthy(base_url):
     """Health-Endpunkt meldet eine fehlerfreie API."""
     response = requests.get(f'{base_url}/health')
     assert response.status_code == 200
-    assert response.json()['status'] == 'unhealthy'
+    assert response.json()['status'] == 'healthy'
 
 
 def test_register_user_creates_new_user(base_url, unique_username):
