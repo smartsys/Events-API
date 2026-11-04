@@ -104,14 +104,16 @@ python app.py
 
 2. Run all tests:
 ```bash
-pytest
+pytest -v
 ```
 
 **Note**: The integration tests create users, events and RSVPs in the database of the running server (`instance/events.db`).
 
-## Continuous Integration
+## Continuous Integration and Deployment
 
-A GitHub Actions workflow (`.github/workflows/ci.yml`) runs on every push to `main` and on every pull request targeting `main`. It:
+A GitHub Actions workflow (`.github/workflows/ci.yml`) runs on every push to `main` and on every pull request targeting `main`.
+
+### Job `test`
 
 1. checks out the code
 2. builds the Docker image `events-api:latest`
@@ -120,7 +122,30 @@ A GitHub Actions workflow (`.github/workflows/ci.yml`) runs on every push to `ma
 5. runs `pytest -v` against the containerized API
 6. always stops and removes the container, even if a step fails
 
-The workflow fails if any test fails. Results are shown in the **Actions** tab of the repository.
+### Job `deploy`
+
+Runs only on a push to `main` and only if the `test` job succeeded. It uses the GitHub environment `production` and:
+
+1. logs in to Docker Hub
+2. builds the image and pushes it to Docker Hub as `events-api:latest`
+3. triggers a new deployment on Render via the deploy hook
+4. waits for Render to roll out the new version
+5. runs a smoke test: `GET /api/health` on Render must return status 200 and `healthy`
+
+The workflow fails if a test or the smoke test fails. Results are shown in the **Actions** tab of the repository.
+
+**Note**: The deployed API uses SQLite inside the container, so all data is lost on every new deployment.
+
+### Required secrets
+
+Stored as environment secrets in the GitHub environment `production`:
+
+| Secret | Description |
+|---|---|
+| `DOCKERHUB_USERNAME` | Docker Hub username |
+| `DOCKERHUB_TOKEN` | Docker Hub personal access token (Read & Write) |
+| `RENDER_DEPLOY_HOOK_URL` | Deploy hook URL of the Render service |
+| `RENDER_BASE_URL` | Public base URL of the Render service, without `/api` |
 
 ## API Endpoints
 
