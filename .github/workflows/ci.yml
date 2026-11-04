@@ -44,3 +44,11 @@ jobs:
 
       - name: Run tests
         run: pytest -v
+
+      - name: Stop container
+        if: always()
+        run: docker stop events-api
+
+      - name: Remove container
+        if: always()
+        run: docker rm events-api
