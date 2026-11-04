@@ -80,3 +80,11 @@ jobs:
 
       - name: Wait for Render to roll out
         run: sleep 60
+
+      - name: Smoke test
+        run: |
+          status=$(curl -s -o response.json -w "%{http_code}" "${{ secrets.RENDER_BASE_URL }}/api/health")
+          echo "Status: $status"
+          cat response.json
+          test "$status" = "200"
+          grep -q '"healthy"' response.json
