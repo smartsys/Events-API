@@ -43,6 +43,8 @@ python app.py
 
 The API will be available at `http://localhost:5000`
 
+**Debug mode** is on by default when running locally. Set `FLASK_DEBUG=0` to turn it off. The Docker image sets `FLASK_DEBUG=0`, so containers run without debug mode.
+
 ## Running with Docker
 
 1. Build the image:
