@@ -4,7 +4,7 @@ info:
   description: |
     A Flask-based REST API for managing events and RSVPs with different access levels.
     This API supports public events, protected events (requires authentication), and admin-only events.
-  version: 1.0.0
+  version: 1.0.1
   contact:
     name: API Support
     email: support@example.com
@@ -47,7 +47,7 @@ paths:
                 $ref: '#/components/schemas/ApiInfo'
               example:
                 name: "Evently API"
-                version: "1.0.0"
+                version: "1.0.1"
                 description: "A Flask-based REST API for managing events and RSVPs with different access levels"
                 documentation:
                   swagger_ui: "/apidocs"
@@ -708,7 +708,7 @@ components:
           example: "Evently API"
         version:
           type: string
-          example: "1.0.0"
+          example: "1.0.1"
         description:
           type: string
           example: "A Flask-based REST API for managing events and RSVPs with different access levels"
